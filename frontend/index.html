@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hybrid Fake News Detector</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #ffeafc;
+      transition: background-color 1s ease;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 60%;
+      border-radius: 20px;
+      border: 2px solid #ff90c2;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-left: 10px;
+      background-color: #ff90c2;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
+    }
+    h1 {
+      color: #d63384;
+    }
+    #character {
+      margin-top: 30px;
+      width: 200px;
+      transition: all 0.5s ease;
+    }
+    #result {
+      font-size: 28px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📰 Hybrid Fake News Detector</h1>
+  <input type="text" id="newsInput" placeholder="Enter your news headline here...">
+  <button onclick="analyzeNews()">Check</button>
+  <div id="result"></div>
+  <img id="character" src="gifs/idle.gif" alt="Character Animation">
+
+  <script>
+  const character = document.getElementById('character');
+  const input = document.getElementById('newsInput');
+  const resultDiv = document.getElementById('result');
+
+  input.addEventListener("input", () => {
+    character.src = "gifs/typing.gif";
+  });
+
+  function flashColor(color) {
+    document.body.style.backgroundColor = color;
+    setTimeout(() => {
+      document.body.style.backgroundColor = "#ffeafc";
+    }, 3000);
+  }
+
+  async function analyzeNews() {
+    const news = input.value.trim();
+
+    if (!news) {
+      alert("Please enter a news headline!");
+      return;
+    }
+
+    // Show typing animation while waiting
+    character.src = "gifs/typing.gif";
+    resultDiv.innerText = "Analyzing...";
+
+    try {
+      const response = await fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ news: news })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        resultDiv.innerText = "⚠️ " + data.error;
+        character.src = "gifs/unsure.gif";
+        flashColor("#fff8b8");
+        return;
+      }
+
+      // Show ML + Online + Verdict results
+      const { ml_prediction, online_result, final_verdict } = data;
+
+      resultDiv.innerHTML = `
+        🧠 <b>ML Prediction:</b> ${ml_prediction}<br>
+        🌐 <b>Online Check:</b> ${online_result}<br>
+        ✅ <b>Final Verdict:</b> ${final_verdict}
+      `;
+
+      // Show corresponding animation + flash
+      if (final_verdict === "REAL") {
+        character.src = "gifs/happy.gif";
+        flashColor("#c6f7d3");
+      } else if (final_verdict === "FAKE") {
+        character.src = "gifs/angry.gif";
+        flashColor("#ffd0d0");
+      } else {
+        character.src = "gifs/unsure.gif";
+        flashColor("#fff8b8");
+      }
+
+    } catch (err) {
+      resultDiv.innerText = "⚠️ Could not connect to backend.";
+      character.src = "gifs/unsure.gif";
+      flashColor("#fff8b8");
+    }
+  }
+</script>
+
+</body>
+</html>
