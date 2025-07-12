@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import pickle
 import os
+from online_checker import check_news_online  # ✅ Import fixed
+from online_checker import check_news_online
+
 
 # Flask app setup
 app = Flask(__name__, static_folder="frontend")
@@ -44,7 +47,8 @@ def predict():
         # Online similarity check
         try:
             online_result = check_news_online(headline)
-        except Exception:
+        except Exception as e:
+            print(f"❌ Error during online check: {e}")
             online_result = "No internet or error checking online."
 
         lower_online = online_result.lower()
