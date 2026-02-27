@@ -26,7 +26,7 @@ A powerful hybrid system that combines **Machine Learning** with **real-time onl
 ![Real News](screenshots/real-news.png)
 
 ### Fake News Detection
-![Fake News](screenshots/fake-news.png)
+![Fake News](screenshots/fake-news..png)
 
 
 ---
