@@ -84,5 +84,5 @@ def predict():
 
 # === Start server ===
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Use PORT from environment, default to 5000 for local
-    app.run(host='0.0.0.0', port=port, debug=False)  # Bind to 0.0.0.0 for Render
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
