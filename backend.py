@@ -2,9 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import pickle
 import os
-from online_checker import check_news_online  # ✅ Import fixed
 from online_checker import check_news_online
-
 
 # Flask app setup
 app = Flask(__name__, static_folder="frontend")
