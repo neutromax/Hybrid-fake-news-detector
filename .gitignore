@@ -1,31 +1,95 @@
-# Ignore Python cache and compiled files
-cache/
+# Python cache and compiled files
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
+*.so
+.python-version
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
 .env
-# Ignore Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+.env.local
+.env.*.local
+.flaskenv
 
-# Ignore model and vectorizer backups if re-trained
-*.pkl
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+instance/
 
-# Ignore temporary/OS-specific files
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Ignore virtual environments
-venv/
-env/
-
-# Ignore logs and temporary files
+# Logs and temporary files
 *.log
 *.tmp
+*.temp
+*.pid
+*.seed
+*.pid.lock
 
-# Ignore VSCode or PyCharm settings
-.vscode/
-.idea/
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
 
-# Ignore data backups or duplicates
-*.csv~
+# Model files - ONLY ignore backups, NOT your main model
+# MAIN MODEL FILES - KEEP THESE IN GIT (DO NOT IGNORE)
+# ml_model/model.pkl - THIS SHOULD BE COMMITTED!
+
+# Backup model files - IGNORE THESE
+*_backup.pkl
+*.temp.pkl
+*.bak.pkl
+backup_*.pkl
+temp_*.pkl
+
+# Test and coverage outputs
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.pytest_cache/
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Uploads and downloads
+uploads/
+downloads/
+media/
+static/uploads/
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
